@@ -5,11 +5,18 @@ export const signIn = async (user) => {
     const res = await axios.post("/auth/signin", user);
     return res.data;
   } catch (error) {
-    return error.response.data.error;
-    //console.log(error.response.data);
-    //throw new Error(error.response.data.error);
+    throw new Error(error.response.data.error);
   }
 };
 
-const userService = { signIn };
+export const signUp = async (user) => {
+  try {
+    const res = await axios.post("/auth/signup", user);
+    return res.data;
+  } catch (error) {
+    throw new Error(error.response.data.error);
+  }
+};
+
+const userService = { signIn, signUp };
 export default userService;

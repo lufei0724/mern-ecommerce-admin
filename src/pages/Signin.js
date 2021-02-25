@@ -10,7 +10,7 @@ import userService from "../services/user";
 import { Redirect } from "react-router-dom";
 
 const Signin = (props) => {
-  const { loginUser, setLoginUser } = props;
+  const { auth, setAuth } = props;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -20,44 +20,44 @@ const Signin = (props) => {
       .signIn({ email, password })
       .then((data) => {
         console.log(data);
-        setLoginUser(data.user);
+        setAuth({
+          isAuthenticated: true,
+        });
         localStorage.setItem("mern-ecom-token", data.token);
         localStorage.setItem("mern-ecom-user", JSON.stringify(data.user));
       })
       .catch((error) => console.log(error.message));
   };
 
-  if (loginUser) return <Redirect to="/" />;
+  if (auth.isAuthenticated) return <Redirect to="/" />;
 
   return (
-    <Layout>
-      <Container style={{ marginTop: "40px" }}>
-        <Row>
-          <Col md={{ span: 6, offset: 3 }}>
-            <h2>Sign-In</h2>
-            <Form onSubmit={userLogin}>
-              <Input
-                controlId={"signin-email"}
-                label={"Email"}
-                type={"email"}
-                value={email}
-                onChange={({ target }) => setEmail(target.value)}
-              />
-              <Input
-                controlId={"signin-password"}
-                label={"Password"}
-                type={"password"}
-                value={password}
-                onChange={({ target }) => setPassword(target.value)}
-              />
-              <Button variant="primary" type="submit">
-                Sign-In
-              </Button>
-            </Form>
-          </Col>
-        </Row>
-      </Container>
-    </Layout>
+    <Container style={{ marginTop: "40px" }}>
+      <Row>
+        <Col md={{ span: 6, offset: 3 }}>
+          <h2>Sign-In</h2>
+          <Form onSubmit={userLogin}>
+            <Input
+              controlId={"signin-email"}
+              label={"Email"}
+              type={"email"}
+              value={email}
+              onChange={({ target }) => setEmail(target.value)}
+            />
+            <Input
+              controlId={"signin-password"}
+              label={"Password"}
+              type={"password"}
+              value={password}
+              onChange={({ target }) => setPassword(target.value)}
+            />
+            <Button variant="primary" type="submit">
+              Sign-In
+            </Button>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

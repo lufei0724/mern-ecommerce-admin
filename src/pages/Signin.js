@@ -6,10 +6,28 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Input from "../components/UI/Input";
+import userService from "../services/user";
+import { Redirect } from "react-router-dom";
 
-const Signin = () => {
+const Signin = (props) => {
+  const { loginUser, setLoginUser } = props;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const userLogin = (e) => {
+    e.preventDefault();
+    userService
+      .signIn({ email, password })
+      .then((data) => {
+        console.log(data);
+        setLoginUser(data.user);
+        localStorage.setItem("mern-ecom-token", data.token);
+        localStorage.setItem("mern-ecom-user", JSON.stringify(data.user));
+      })
+      .catch((error) => console.log(error.message));
+  };
+
+  if (loginUser) return <Redirect to="/" />;
 
   return (
     <Layout>
@@ -17,7 +35,7 @@ const Signin = () => {
         <Row>
           <Col md={{ span: 6, offset: 3 }}>
             <h2>Sign-In</h2>
-            <Form>
+            <Form onSubmit={userLogin}>
               <Input
                 controlId={"signin-email"}
                 label={"Email"}

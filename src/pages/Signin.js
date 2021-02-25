@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Layout from "../components/Layout";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -19,7 +18,6 @@ const Signin = (props) => {
     userService
       .signIn({ email, password })
       .then((data) => {
-        console.log(data);
         setAuth({
           isAuthenticated: true,
         });

@@ -1,10 +1,11 @@
 import Container from "react-bootstrap/Container";
-const Home = (props) => {
+
+const Product = () => {
   return (
     <Container>
-      <h1>Welcome to Admin Dashboard</h1>
+      <h1>Product</h1>
     </Container>
   );
 };
 
-export default Home;
+export default Product;

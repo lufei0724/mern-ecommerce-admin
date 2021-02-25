@@ -40,8 +40,8 @@ const Header = (props) => {
   const { auth, setAuth } = props;
   console.log(auth);
   return (
-    <Navbar bg="light" expand="xl">
-      <Container>
+    <Navbar bg="dark" variant="dark" expand="xl" style={{ zIndex: 1 }}>
+      <Container fluid>
         <Link to="/" className="navbar-brand">
           Admin Dashboard
         </Link>

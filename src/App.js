@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, cloneElement } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Home from "./pages/Home";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import Layout from "./components/Layout";
+import Product from "./pages/Product";
+import Order from "./pages/Order";
 
 const PrivateRoute = ({ children, ...rest }) => {
   const { auth } = { ...rest };
@@ -11,7 +13,11 @@ const PrivateRoute = ({ children, ...rest }) => {
     <Route
       {...rest}
       render={() =>
-        auth.isAuthenticated ? children : <Redirect to="/signin" />
+        auth.isAuthenticated ? (
+          cloneElement(children, { auth })
+        ) : (
+          <Redirect to="/signin" />
+        )
       }
     />
   );
@@ -29,10 +35,16 @@ function App() {
   }, []);
 
   return (
-    <Layout auth={auth} setAuth={setAuth}>
-      <Switch>
+    <Switch>
+      <Layout auth={auth} setAuth={setAuth}>
         <PrivateRoute path="/" exact auth={auth}>
           <Home />
+        </PrivateRoute>
+        <PrivateRoute path="/product" auth={auth}>
+          <Product />
+        </PrivateRoute>
+        <PrivateRoute path="/order" auth={auth}>
+          <Order />
         </PrivateRoute>
         <Route path="/signup">
           <Signup auth={auth} setAuth={setAuth} />
@@ -40,8 +52,8 @@ function App() {
         <Route path="/signin">
           <Signin auth={auth} setAuth={setAuth} />
         </Route>
-      </Switch>
-    </Layout>
+      </Layout>
+    </Switch>
   );
 }
 

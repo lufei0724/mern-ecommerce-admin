@@ -1,6 +1,6 @@
 import Container from "react-bootstrap/Container";
 
-const Order = () => {
+const Orders = () => {
   return (
     <Container>
       <h1>Order</h1>
@@ -8,4 +8,4 @@ const Order = () => {
   );
 };
 
-export default Order;
+export default Orders;

@@ -9,9 +9,14 @@
 
 .sidebarSticky {
   position: sticky;
-  top: 72px;
-  height: calc(100vh - 72px);
+  top: 56px;
+  height: calc(100vh - 56px);
   padding-top: 0.5rem;
   overflow-x: hidden;
   overflow-y: auto;
+}
+
+.navLinkInSidebar {
+  font-weight: 500;
+  color: #333;
 }

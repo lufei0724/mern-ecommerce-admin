@@ -4,8 +4,9 @@ import Home from "./pages/Home";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import Layout from "./components/Layout";
-import Product from "./pages/Product";
-import Order from "./pages/Order";
+import Products from "./pages/Products";
+import Orders from "./pages/Orders";
+import Categories from "./pages/Categories";
 
 const PrivateRoute = ({ children, ...rest }) => {
   const { auth } = { ...rest };
@@ -38,14 +39,21 @@ function App() {
     <Switch>
       <Layout auth={auth} setAuth={setAuth}>
         <PrivateRoute path="/" exact auth={auth}>
+          <Redirect to="/dashboard" />
+        </PrivateRoute>
+        <PrivateRoute path="/dashboard" auth={auth}>
           <Home />
         </PrivateRoute>
-        <PrivateRoute path="/product" auth={auth}>
-          <Product />
+        <PrivateRoute path="/categories" auth={auth}>
+          <Categories />
         </PrivateRoute>
-        <PrivateRoute path="/order" auth={auth}>
-          <Order />
+        <PrivateRoute path="/products" auth={auth}>
+          <Products />
         </PrivateRoute>
+        <PrivateRoute path="/orders" auth={auth}>
+          <Orders />
+        </PrivateRoute>
+
         <Route path="/signup">
           <Signup auth={auth} setAuth={setAuth} />
         </Route>

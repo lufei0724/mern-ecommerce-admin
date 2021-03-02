@@ -6,8 +6,9 @@ import categoryService from "../services/category";
 import Form from "react-bootstrap/Form";
 import Input from "../components/UI/Input";
 import Select from "../components/UI/Select";
+import Card from "react-bootstrap/Card";
 
-const Category = (props) => {
+const CategoryInput = (props) => {
   const { categories, closeForm } = props;
   const [name, setName] = useState("");
   const [parentId, setParentId] = useState("");
@@ -81,6 +82,39 @@ const Category = (props) => {
   );
 };
 
+const Category = (props) => {
+  const { category } = props;
+  const [displayChild, setDisplayChild] = useState(category.displayChildren);
+
+  let childStyle = {};
+  if (!displayChild) {
+    childStyle.maxHeight = "0";
+    childStyle.overflow = "hidden";
+    childStyle.padding = "0";
+    childStyle.minHeight = "0";
+  }
+
+  const toggleDisplayChild = () => {
+    setDisplayChild(!displayChild);
+  };
+
+  return (
+    <div>
+      <Card.Header onClick={toggleDisplayChild}>
+        <span>{category.name}</span>
+        {category.children.length > 0 && (
+          <span style={{ paddingLeft: "0.5rem" }} className="text-secondary">
+            ({category.children.length})
+          </span>
+        )}
+      </Card.Header>
+      {category.children.length > 0 && (
+        <Card.Body style={childStyle}>{props.children}</Card.Body>
+      )}
+    </div>
+  );
+};
+
 const Categories = () => {
   const [categories, setCategories] = useState([]);
   const [show, setShow] = useState(false);
@@ -88,6 +122,7 @@ const Categories = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  /*
   const renderCategories = (categories) => {
     return (
       <ul>
@@ -104,12 +139,39 @@ const Categories = () => {
       </ul>
     );
   };
+  */
+
+  const renderCategories = (categories) => {
+    return categories.map((cat) => {
+      return (
+        <Category category={cat} key={cat.id}>
+          {cat.children &&
+            cat.children.length > 0 &&
+            renderCategories(cat.children)}
+        </Category>
+      );
+    });
+  };
 
   useEffect(() => {
+    const initCategories = (categories) => {
+      let newCategories = [];
+      for (const cate of categories) {
+        newCategories.push({
+          ...cate,
+          displayChildren: false,
+          children: initCategories(cate.children, cate.id),
+        });
+      }
+      return newCategories;
+    };
+
     categoryService
       .getAll()
       .then((data) => {
-        setCategories(data);
+        const newCategories = initCategories(data);
+        console.log(newCategories);
+        setCategories(newCategories);
       })
       .catch((error) => console.log(error.message));
   }, [show]);
@@ -119,13 +181,13 @@ const Categories = () => {
         <h3>Categories</h3>
         <Button onClick={handleShow}>Add New</Button>
       </div>
-      <div>{renderCategories(categories)}</div>
+      {categories.length > 0 && <Card>{renderCategories(categories)}</Card>}
       <Modal show={show} onHide={handleClose} animation={false}>
         <Modal.Header closeButton>
           <Modal.Title>Create new category</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Category
+          <CategoryInput
             categories={categories}
             setCategories={setCategories}
             closeForm={handleClose}

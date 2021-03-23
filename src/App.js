@@ -7,6 +7,7 @@ import Layout from "./components/Layout";
 import Products from "./pages/Products";
 import Orders from "./pages/Orders";
 import Categories from "./pages/Categories";
+import Product from "./pages/Product";
 
 const PrivateRoute = ({ children, ...rest }) => {
   const { auth } = { ...rest };
@@ -47,11 +48,14 @@ function App() {
         <PrivateRoute path="/categories" auth={auth}>
           <Categories />
         </PrivateRoute>
-        <PrivateRoute path="/products" auth={auth}>
+        <PrivateRoute path="/products" exact auth={auth}>
           <Products />
         </PrivateRoute>
         <PrivateRoute path="/orders" auth={auth}>
           <Orders />
+        </PrivateRoute>
+        <PrivateRoute path="/products/edit" auth={auth}>
+          <Product />
         </PrivateRoute>
 
         <Route path="/signup">

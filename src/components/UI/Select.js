@@ -1,4 +1,5 @@
 import Form from "react-bootstrap/Form";
+import FormGroupLayout from "./FormGroupLayout";
 
 const Select = (props) => {
   const {
@@ -9,11 +10,16 @@ const Select = (props) => {
     helpText,
     value,
     onChange,
+    horizontal,
   } = props;
 
   return (
-    <Form.Group controlId={controlId}>
-      <Form.Label>{label}</Form.Label>
+    <FormGroupLayout
+      controlId={controlId}
+      label={label}
+      helpText={helpText}
+      horizontal={horizontal}
+    >
       <Form.Control
         as="select"
         defaultValue={defaultValue}
@@ -31,8 +37,7 @@ const Select = (props) => {
           </option>
         ))}
       </Form.Control>
-      <Form.Text className="text-muted">{helpText}</Form.Text>
-    </Form.Group>
+    </FormGroupLayout>
   );
 };
 

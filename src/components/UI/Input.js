@@ -1,4 +1,7 @@
 import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import FormGroupLayout from "./FormGroupLayout";
 
 const Input = (props) => {
   const {
@@ -9,19 +12,23 @@ const Input = (props) => {
     helpText,
     value,
     onChange,
+    horizontal,
   } = props;
 
   return (
-    <Form.Group controlId={controlId}>
-      <Form.Label>{label}</Form.Label>
+    <FormGroupLayout
+      controlId={controlId}
+      label={label}
+      helpText={helpText}
+      horizontal={horizontal}
+    >
       <Form.Control
         type={type}
         placeholder={placeholder}
         value={value}
         onChange={onChange}
       />
-      <Form.Text className="text-muted">{helpText}</Form.Text>
-    </Form.Group>
+    </FormGroupLayout>
   );
 };
 

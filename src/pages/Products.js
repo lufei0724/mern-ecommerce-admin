@@ -6,8 +6,9 @@ import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import Image from "react-bootstrap/Image";
 import dateLib from "../libs/date";
+import { Link } from "react-router-dom";
 
-const Product = (props) => {
+const ProductLine = (props) => {
   const { product, index } = props;
   const productImage = product.productImages[0].name;
   return (
@@ -41,10 +42,12 @@ const Products = () => {
       .catch((error) => console.log(error.message));
   }, []);
   return (
-    <Container>
+    <Container fluid>
       <div className="d-flex justify-content-between pb-2 mb-3 border-bottom">
         <h3>Products</h3>
-        <Button>Add New</Button>
+        <Link to="/products/edit">
+          <Button>Add New</Button>
+        </Link>
       </div>
       <Table striped bordered hover>
         <thead>
@@ -60,7 +63,7 @@ const Products = () => {
         </thead>
         <tbody>
           {productList.map((product, index) => (
-            <Product key={product.id} product={product} index={index} />
+            <ProductLine key={product.id} product={product} index={index} />
           ))}
         </tbody>
       </Table>

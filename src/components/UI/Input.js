@@ -1,6 +1,4 @@
 import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import FormGroupLayout from "./FormGroupLayout";
 
 const Input = (props) => {

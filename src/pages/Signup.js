@@ -20,6 +20,8 @@ const Signup = (props) => {
       .signUp({ username, email, password })
       .then((data) => {
         setAuth({ isAuthenticated: true });
+        localStorage.setItem("mern-ecom-token", data.token);
+        localStorage.setItem("mern-ecom-user", JSON.stringify(data.user));
       })
       .catch((error) => console.log(error.message));
   };

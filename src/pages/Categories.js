@@ -122,25 +122,6 @@ const Categories = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  /*
-  const renderCategories = (categories) => {
-    return (
-      <ul>
-        {categories.map((category) => {
-          return (
-            <li key={category.id}>
-              {category.name}
-              {category.children &&
-                category.children.length > 0 &&
-                renderCategories(category.children)}
-            </li>
-          );
-        })}
-      </ul>
-    );
-  };
-  */
-
   const renderCategories = (categories) => {
     return categories.map((cat) => {
       return (
@@ -170,7 +151,6 @@ const Categories = () => {
       .getAll()
       .then((data) => {
         const newCategories = initCategories(data);
-        console.log(newCategories);
         setCategories(newCategories);
       })
       .catch((error) => console.log(error.message));

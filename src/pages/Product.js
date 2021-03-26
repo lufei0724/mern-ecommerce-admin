@@ -9,7 +9,7 @@ import FileInput from "../components/UI/FileInput";
 import Select from "../components/UI/Select";
 import categoryService from "../services/category";
 import productService from "../services/product";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 const Product = () => {
   const initProduct = {
@@ -19,6 +19,7 @@ const Product = () => {
     brand: "",
     price: "",
   };
+  const [submitResult, setSubmitResult] = useState(false);
   const [product, setProduct] = useState(initProduct);
   const [categories, setCategories] = useState([]);
   const fileInput = useRef(null);
@@ -51,9 +52,12 @@ const Product = () => {
       .addNew(formData)
       .then((data) => {
         console.log(data);
+        setSubmitResult(true);
       })
       .catch((error) => console.log(error.message));
   };
+
+  if (submitResult) return <Redirect to="/products" />;
 
   return (
     <Container fluid>

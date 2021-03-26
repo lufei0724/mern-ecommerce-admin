@@ -7,7 +7,6 @@ import Col from "react-bootstrap/Col";
 import Input from "../components/UI/Input";
 import userService from "../services/user";
 import { Redirect } from "react-router-dom";
-import axios from "../helper/axios";
 
 const Signin = (props) => {
   const { auth, setAuth } = props;
